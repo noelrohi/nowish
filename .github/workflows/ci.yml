@@ -1,0 +1,63 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  macos:
+    name: macOS build and tests
+    runs-on: macos-26
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Show toolchain
+        run: xcodebuild -version
+      - name: Run unit tests
+        run: |
+          set -o pipefail
+          xcodebuild test -project nowish.xcodeproj -scheme nowish \
+            -configuration Debug -destination 'platform=macOS' \
+            -derivedDataPath build/DerivedData -resultBundlePath build/Tests.xcresult \
+            -only-testing:nowishTests CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual \
+            ENABLE_HARDENED_RUNTIME=NO | tee build-tests.log
+      - name: Build universal Release
+        run: |
+          set -o pipefail
+          xcodebuild build -project nowish.xcodeproj -scheme nowish \
+            -configuration Release -destination 'generic/platform=macOS' \
+            -derivedDataPath build/DerivedData ARCHS='arm64 x86_64' \
+            ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO | tee build-release.log
+      - name: Check release scripts and website
+        run: |
+          bash -n scripts/build-release.sh
+          bash -n scripts/notarize-release.sh
+          bash -n scripts/setup-release-wizard.sh
+          python3 -m py_compile scripts/prepare-appcast.py
+          node --check site/app.js
+          python3 - <<'PY'
+          import json, plistlib, xml.etree.ElementTree as ET
+          from pathlib import Path
+          ET.parse('appcast.xml')
+          for path in Path('Configuration').glob('*.plist'):
+              plistlib.loads(path.read_bytes())
+          release = json.loads(Path('site/release.json').read_text())
+          assert set(release) == {'version', 'url'}
+          PY
+      - name: Keep failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: macos-failure-diagnostics
+          path: |
+            build/Tests.xcresult
+            build-tests.log
+            build-release.log
+          retention-days: 7
+          if-no-files-found: ignore
