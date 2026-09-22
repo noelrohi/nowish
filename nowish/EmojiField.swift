@@ -15,37 +15,109 @@ enum ActivityEmoji {
 
 struct EmojiField: View {
     @Binding var emoji: String
-    var validity: Binding<Bool> = .constant(true)
     @State private var draft = ""
+    @FocusState private var focused: Bool
+    @State private var showingPicker = false
 
-    private var valid: Bool { ActivityEmoji.isValid(draft) }
+    private static let suggestions = ["💻", "🛠️", "🎨", "📝", "🎧", "🔬", "📚", "🚀", "🌐", "💬", "📞", "🎮", "🎬", "📐", "🧑‍💻"]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Text("Emoji")
-                Spacer()
-                TextField("Paste an emoji", text: $draft)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 130)
-                    .accessibilityLabel("Activity emoji")
-                Menu("Suggestions") {
-                    ForEach(["💻", "🛠️", "🎨", "📝", "🎧", "🔬", "📚", "🚀", "🌐", "💬", "📞", "🎮", "🎬", "📐", "🧑‍💻"], id: \.self) { value in
-                        Button(value) { draft = value }
+        LabeledContent("Emoji") {
+            HStack(spacing: 6) {
+                TextField("Emoji", text: $draft)
+                    .labelsHidden()
+                    .textFieldStyle(.plain)
+                    .font(.system(size: 18))
+                    .multilineTextAlignment(.center)
+                    .focused($focused)
+                    .frame(width: 36, height: 28)
+                    .background(.quaternary, in: RoundedRectangle(cornerRadius: 7))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 7)
+                            .strokeBorder(Color.accentColor, lineWidth: 2)
+                            .opacity(focused ? 1 : 0)
                     }
-                }.fixedSize()
+                    .help("Type or paste an emoji")
+                    .accessibilityLabel("Activity emoji")
+                Button { showingPicker = true } label: {
+                    Image(systemName: "chevron.down")
+                }
+                .buttonStyle(.borderless)
+                .help("Choose an emoji")
+                .popover(isPresented: $showingPicker, arrowEdge: .bottom) {
+                    EmojiGrid(selection: emoji, suggestions: Self.suggestions) { value in
+                        emoji = value
+                        showingPicker = false
+                    } openPalette: {
+                        // The palette inserts into the focused field, so close the popover first.
+                        showingPicker = false
+                        focused = true
+                        DispatchQueue.main.async { NSApp.orderFrontCharacterPalette(nil) }
+                    }
+                }
             }
-            Text(valid ? "Paste an emoji, or press Control–Command–Space to choose one." : "Enter one emoji (up to 16 Unicode code points). Your previous emoji is kept until valid.")
-                .font(.caption)
-                .foregroundStyle(valid ? Color.secondary : Color.orange)
         }
-        .onAppear { draft = emoji; validity.wrappedValue = ActivityEmoji.isValid(emoji) }
+        .onAppear { draft = emoji }
         .onChange(of: draft) { _, value in
-            validity.wrappedValue = ActivityEmoji.isValid(value)
-            if ActivityEmoji.isValid(value) { emoji = value }
+            // Typing or pasting replaces the emoji; anything that isn't one emoji is rejected.
+            if let last = value.last, ActivityEmoji.isValid(String(last)) {
+                emoji = String(last)
+                if value != emoji { draft = emoji }
+            } else if !value.isEmpty {
+                draft = emoji
+            }
         }
         .onChange(of: emoji) { _, value in
             if value != draft { draft = value }
         }
+        .onChange(of: focused) { _, isFocused in
+            if !isFocused { draft = emoji }
+        }
+    }
+}
+
+private struct EmojiGrid: View {
+    let selection: String
+    let suggestions: [String]
+    let choose: (String) -> Void
+    let openPalette: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            LazyVGrid(columns: Array(repeating: GridItem(.fixed(34), spacing: 4), count: 5), spacing: 4) {
+                ForEach(suggestions, id: \.self) { value in
+                    EmojiCell(emoji: value, selected: value == selection) { choose(value) }
+                }
+            }
+            Divider()
+            Button("Emoji & Symbols…", action: openPalette)
+                .buttonStyle(.borderless)
+        }
+        .padding(10)
+    }
+}
+
+private struct EmojiCell: View {
+    let emoji: String
+    let selected: Bool
+    let action: () -> Void
+    @State private var hovering = false
+
+    var body: some View {
+        Button(action: action) {
+            Text(emoji)
+                .font(.system(size: 20))
+                .frame(width: 34, height: 34)
+                .background {
+                    RoundedRectangle(cornerRadius: 7)
+                        .fill(selected ? AnyShapeStyle(Color.accentColor.opacity(0.3)) : AnyShapeStyle(.quaternary))
+                        .opacity(selected || hovering ? 1 : 0)
+                }
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering = $0 }
+        .accessibilityLabel(emoji)
+        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 }

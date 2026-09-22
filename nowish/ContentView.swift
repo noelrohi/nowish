@@ -1,15 +1,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject private var updater = UpdaterManager.shared
     @Bindable var model: PresenceModel
     var openSettings: () -> Void
 
+    private var statusColor: Color {
+        if model.error != nil { return .orange }
+        return model.preferences.sharing && model.canShare ? .green : .secondary
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Label("Nowish", image: "MenuBarIcon")
-                    .font(.headline)
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 10) {
+                Image("MenuBarIcon")
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Nowish").font(.headline)
+                    HStack(spacing: 5) {
+                        Circle().fill(statusColor).frame(width: 6, height: 6)
+                        Text(model.status).lineLimit(1)
+                    }
+                    .font(.caption).foregroundStyle(.secondary)
+                }
                 Spacer()
                 Toggle("Share activity", isOn: $model.preferences.sharing)
                     .labelsHidden()
@@ -18,33 +29,56 @@ struct ContentView: View {
                     .help("Share your frontmost app with Roam")
             }
             ActivityPreview(display: model.preview, emptyReason: model.emptyActivityReason)
-            VStack(alignment: .leading, spacing: 5) {
-                Label(model.status, systemImage: model.error == nil ? "circle.fill" : "exclamationmark.circle")
-                    .font(.caption)
-                    .foregroundStyle(model.error == nil ? Color.secondary : Color.orange)
-                if let error = model.error {
+            if let error = model.error {
+                HStack(alignment: .firstTextBaseline) {
                     Text(error).font(.caption).foregroundStyle(.secondary)
+                    Spacer()
                     Button("Retry", action: model.retry).controlSize(.small)
                 }
             }
-            if let app = model.frontmost {
-                let ignored = model.preferences.ignored.contains(where: { $0.id == app.id })
-                Button(ignored ? "Un-ignore \(app.name)" : "Ignore \(app.name)") {
-                    model.setIgnored(app, ignored: !ignored)
-                }
-            }
-            Button("Check for Updates…", action: updater.checkForUpdates)
-                .disabled(!updater.isStarted || !updater.canCheckForUpdates)
             Divider()
-            HStack {
-                Button("Settings…", action: openSettings).keyboardShortcut(",")
-                Spacer()
-                Button("Quit") { NSApp.terminate(nil) }.keyboardShortcut("q")
+            VStack(spacing: 0) {
+                if let app = model.frontmost {
+                    let ignored = model.preferences.ignored.contains(where: { $0.id == app.id })
+                    MenuRow(ignored ? "Share \(app.name)" : "Ignore \(app.name)") {
+                        model.setIgnored(app, ignored: !ignored)
+                    }
+                }
+                MenuRow("Settings…", shortcut: "⌘,", action: openSettings).keyboardShortcut(",")
+                MenuRow("Quit Nowish", shortcut: "⌘Q") { NSApp.terminate(nil) }.keyboardShortcut("q")
             }
-            .buttonStyle(.plain)
+            .padding(.horizontal, -8)
         }
-        .padding(20)
+        .padding(16)
         .frame(width: 320)
+    }
+}
+
+private struct MenuRow: View {
+    let title: String
+    var shortcut: String?
+    let action: () -> Void
+    @State private var hovering = false
+
+    init(_ title: String, shortcut: String? = nil, action: @escaping () -> Void) {
+        self.title = title
+        self.shortcut = shortcut
+        self.action = action
+    }
+
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Text(title).lineLimit(1)
+                Spacer()
+                if let shortcut { Text(shortcut).foregroundStyle(.secondary) }
+            }
+            .padding(.horizontal, 8).padding(.vertical, 5)
+            .background(.quaternary.opacity(hovering ? 1 : 0), in: RoundedRectangle(cornerRadius: 6))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering = $0 }
     }
 }
 

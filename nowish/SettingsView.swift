@@ -117,7 +117,6 @@ private struct AppActivityEditor: View {
     @Bindable var model: PresenceModel
     let app: TrackedApp
     @Environment(\.dismiss) private var dismiss
-    @State private var emojiValid = true
     @State private var emoji: String
     @State private var prefix: String
     @State private var shareApp: Bool
@@ -149,7 +148,7 @@ private struct AppActivityEditor: View {
                 Section(app.name) {
                     Toggle("Share when this app is frontmost", isOn: $shareApp)
                         .toggleStyle(.switch)
-                    EmojiField(emoji: $emoji, validity: $emojiValid)
+                    EmojiField(emoji: $emoji)
                     Picker("Glow", selection: $color) {
                         Text("Use default").tag(nil as String?)
                         Text("None").tag(Optional(""))
@@ -182,7 +181,6 @@ private struct AppActivityEditor: View {
                     model.setIgnored(app, ignored: !shareApp)
                     dismiss()
                 }.keyboardShortcut(.defaultAction)
-                    .disabled(!emojiValid)
             }.padding(20)
         }.frame(width: 500, height: 550)
     }

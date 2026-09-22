@@ -12,7 +12,6 @@ final class PresenceModel {
     private(set) var runningApps: [TrackedApp] = []
     private(set) var frontmost: TrackedApp?
     private(set) var hasToken = false
-    private(set) var status = "Sharing is off"
     private(set) var error: String?
     private(set) var lastPublished: Date?
     private var token = ""
@@ -31,6 +30,16 @@ final class PresenceModel {
 
     var preview: ActivityDisplay? { preferences.display(for: frontmost) }
     var emptyActivityReason: String? { preferences.emptyActivityReason(for: frontmost) }
+
+    // Derived from current state so the switch and the status never disagree while a request is in flight.
+    var status: String {
+        if error != nil { return "Couldn’t update Roam" }
+        if !preferences.sharing { return "Sharing is off" }
+        if !canShare { return "Connect to Roam to start" }
+        if suspended { return "Paused while away" }
+        if preview == nil { return emptyActivityReason ?? "Activity cleared" }
+        return "Sharing with Roam"
+    }
     var canShare: Bool { hasToken && !preferences.userID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 
     init(defaults: UserDefaults = .standard, client: RoamClient? = nil) {
@@ -172,14 +181,10 @@ final class PresenceModel {
                 publishedToken = currentToken
                 try await client.publish(desired, userID: user, token: currentToken, externalID: externalID)
                 lastPublished = .now
-                status = "Sharing with Roam"
-            } else {
-                status = !preferences.sharing ? "Sharing is off" : !canShare ? "Connect to Roam to start" : suspended ? "Paused while away" : (emptyActivityReason ?? "Activity cleared")
             }
             error = nil
         } catch {
             self.error = error.localizedDescription
-            status = "Couldn’t update Roam"
         }
     }
 }
