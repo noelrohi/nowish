@@ -82,6 +82,7 @@ jobs:
       - name: Notarize, staple, package, and sign
         env:
           NOTARY_PROFILE: nowish-ci
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: scripts/notarize-release.sh
       - name: Prepare release metadata
         run: python3 scripts/prepare-appcast.py

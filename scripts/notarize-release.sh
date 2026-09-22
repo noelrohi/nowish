@@ -36,6 +36,11 @@ codesign --force --sign "$SIGNING_IDENTITY" --timestamp "$RELEASE_DIR/Nowish.dmg
 submit "$RELEASE_DIR/Nowish.dmg" "$RELEASE_DIR/dmg-notarization.json"
 xcrun stapler staple "$RELEASE_DIR/Nowish.dmg"
 xcrun stapler validate "$RELEASE_DIR/Nowish.dmg"
-"$SPARKLE_BIN/sign_update" --account com.enru.nowish.sparkle "$RELEASE_DIR/Nowish.dmg" > "$RELEASE_DIR/sparkle-signature.txt"
+# CI passes the key on stdin; reading it from a fresh Keychain blocks on an access prompt.
+if [[ -n "${SPARKLE_PRIVATE_KEY:-}" ]]; then
+  printf '%s' "$SPARKLE_PRIVATE_KEY" | "$SPARKLE_BIN/sign_update" --ed-key-file - "$RELEASE_DIR/Nowish.dmg" > "$RELEASE_DIR/sparkle-signature.txt"
+else
+  "$SPARKLE_BIN/sign_update" --account com.enru.nowish.sparkle "$RELEASE_DIR/Nowish.dmg" > "$RELEASE_DIR/sparkle-signature.txt"
+fi
 (cd "$RELEASE_DIR" && shasum -a 256 Nowish.dmg) > "$RELEASE_DIR/SHA256SUMS"
 echo "Ready to publish: $RELEASE_DIR/Nowish.dmg"
