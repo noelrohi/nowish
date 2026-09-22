@@ -13,8 +13,8 @@ Open `nowish.xcodeproj`, select the `nowish` scheme, and run on macOS 14 or newe
 1. Open **Settings → Roam** and enter your Roam email (or user ID) and personal access token.
 2. Save the connection. The token is stored in macOS Keychain; preferences stay in UserDefaults.
 3. Choose an activity text preset, emoji, and optional glow under **Activity**.
-4. Under **Applications**, use **Ignore** or **Un-ignore** beside each app. Ignored apps clear activity when frontmost. Finder is ignored by default (applied once to existing settings); you can un-ignore it. Search and filters help find running or saved apps.
-5. Use **Applications → Edit…** to set an app’s emoji, prefix, optional display name, and glow color (for example, “🛠️ Building in Xcode”). Leave the display name blank to use the original app name. **Glow → Use default** inherits the global color; **None** disables glow for that app. An empty prefix shows just the name; **Use Defaults** removes the override. **Add App…** lets you configure an app that is not running. Ignored apps remain ignored.
+4. Under **Applications**, use the switch beside each app to share or ignore it. Ignored apps clear activity when frontmost. Finder is ignored by default (applied once to existing settings); you can switch it back on. Search and filters help find running or saved apps.
+5. Click an app under **Applications** to set an app’s emoji, prefix, optional display name, and glow color (for example, “🛠️ Building in Xcode”). Leave the display name blank to use the original app name. **Glow → Use default** inherits the global color; **None** disables glow for that app. An empty prefix shows just the name; **Use Defaults** removes the override. The **+** button lets you configure an app that is not running. Ignored apps remain ignored.
 6. Turn on **Share my frontmost app**. Sharing starts off on a fresh installation.
 
 Nowish observes NSWorkspace activation, launch, and termination notifications. It does not inspect window titles, documents, screen contents, or models inside other apps. Opening Nowish retains the last observed app. Apps without a bundle identifier produce no activity.
@@ -38,7 +38,7 @@ For a manual check, connect and enable sharing, switch between two apps, ignore 
 
 ## Automatic updates
 
-Sparkle 2.10 is integrated through Swift Package Manager. **Settings → Updates** and the menu bar offer **Check for Updates…**. Automatic checks are available in Release builds; installation remains a user choice. Debug builds never start the updater.
+Sparkle 2.10 is integrated through Swift Package Manager. **Settings → Updates** offers **Check for Updates…**. Automatic checks are available in Release builds; installation remains a user choice. Debug builds never start the updater.
 
 - Public repository: https://github.com/noelrohi/nowish
 - Live feed: https://raw.githubusercontent.com/noelrohi/nowish/main/appcast.xml
