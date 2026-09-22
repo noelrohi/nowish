@@ -29,7 +29,7 @@ ditto "$APP" "$RELEASE_DIR/dmg-content/Nowish.app"
 ln -sfn /Applications "$RELEASE_DIR/dmg-content/Applications"
 hdiutil create -volname Nowish -srcfolder "$RELEASE_DIR/dmg-content" -ov -format UDZO "$RELEASE_DIR/Nowish.dmg"
 if [[ -z "${SIGNING_IDENTITY:-}" ]]; then
-  codesign -d --extract-certificates "$RELEASE_DIR/signer-" "$APP"
+  codesign -d --extract-certificates="$RELEASE_DIR/signer-" "$APP"
   SIGNING_IDENTITY=$(shasum -a 1 "$RELEASE_DIR/signer-0" | awk '{print $1}')
 fi
 codesign --force --sign "$SIGNING_IDENTITY" --timestamp "$RELEASE_DIR/Nowish.dmg"
@@ -37,5 +37,5 @@ submit "$RELEASE_DIR/Nowish.dmg" "$RELEASE_DIR/dmg-notarization.json"
 xcrun stapler staple "$RELEASE_DIR/Nowish.dmg"
 xcrun stapler validate "$RELEASE_DIR/Nowish.dmg"
 "$SPARKLE_BIN/sign_update" --account com.enru.nowish.sparkle "$RELEASE_DIR/Nowish.dmg" > "$RELEASE_DIR/sparkle-signature.txt"
-shasum -a 256 "$RELEASE_DIR/Nowish.dmg" > "$RELEASE_DIR/SHA256SUMS"
+(cd "$RELEASE_DIR" && shasum -a 256 Nowish.dmg) > "$RELEASE_DIR/SHA256SUMS"
 echo "Ready to publish: $RELEASE_DIR/Nowish.dmg"
