@@ -1,8 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
   <channel>
     <title>Nowish</title>
     <description>Nowish releases</description>
     <language>en</language>
+    <item>
+      <title>Nowish 1.0.0</title>
+      <pubDate>Tue, 22 Sep 2026 06:43:29 GMT</pubDate>
+      <sparkle:version>2</sparkle:version>
+      <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>Nowish 1.0.0. See GitHub Releases for details.</description>
+      <enclosure url="https://github.com/noelrohi/nowish/releases/download/v1.0.0/Nowish.dmg" type="application/octet-stream" sparkle:edSignature="D6ZpFZvF+U92mqe21WkbpXWpqfAWCYegYjX7JKVFoWbG290fSxPs939EA5K6K2jzHu9LNU22QCAC+o5cl7qDBA==" length="3536668" />
+    </item>
   </channel>
 </rss>

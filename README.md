@@ -2,7 +2,11 @@
 
 Your status, in the moment. A native macOS menu bar app that shares your frontmost application as a Roam external activity.
 
-## Run
+## Download
+
+Download [Nowish for macOS](https://github.com/noelrohi/nowish/releases/latest/download/Nowish.dmg), open the DMG, and drag Nowish into Applications. Requires macOS 14+; supports Apple silicon and Intel.
+
+## Run from source
 
 Open `nowish.xcodeproj`, select the `nowish` scheme, and run on macOS 14 or newer. Settings opens on first launch; afterward use the dotted-circle menu bar icon.
 
@@ -46,4 +50,4 @@ The public repository hosts the app source, update feed, and release workflow. S
 
 For a release, archive/export and notarize the app, package it, sign the archive with Sparkle’s `sign_update --account com.enru.nowish.sparkle`, and publish the archive as a GitHub release. Add its download URL, signature, byte length, build number, version, and minimum macOS version to `appcast.xml`. Increment `CURRENT_PROJECT_VERSION` for every update. Publish the matching feed to `main`. Never commit or export the private signing key into source control.
 
-Verified: Debug build and unit tests, Release build, packaged sandbox entitlements/framework, HTTPS feed retrieval, and a live manual Release check returning “You’re up to date.” Download/install and notarized distribution still need the first signed release.
+Verified: Debug build and unit tests, Release build, packaged sandbox entitlements/framework, HTTPS feed retrieval, and a live manual Release check returning “You’re up to date.” Nowish 1.0.0 has been Developer ID signed, notarized, stapled, and published. Gatekeeper, DMG contents, both CPU architectures, and Sparkle signature were verified. End-to-end Sparkle replacement remains to be tested with a subsequent release.

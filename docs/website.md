@@ -16,6 +16,6 @@ Deploy to the existing Cloudflare Pages project:
 npx wrangler@4 pages deploy site --project-name nowish --branch main --commit-dirty=true
 ```
 
-The first signed app release has not been published yet, so the CTA points to GitHub Releases with a coming-soon message. Once a signed/notarized installer is public, set `version` and `url` in `site/release.json` to the release version and its `https://github.com/noelrohi/nowish/releases/download/...` asset URL, then redeploy. The CTA will become Download for macOS. Do not advertise a download before the artifact exists.
+Nowish 1.0.0 is published and the CTA downloads its notarized DMG. For future releases, set `version` and `url` in `site/release.json` to the release version and its `https://github.com/noelrohi/nowish/releases/download/...` asset URL, then redeploy. The CTA will become Download for macOS. Do not advertise a download before the artifact exists.
 
 Checked the desktop and 390px mobile layout, image loading, all four demo controls and their selected states, and the unpublished-release fallback.
