@@ -5,6 +5,15 @@
     <description>Nowish releases</description>
     <language>en</language>
     <item>
+      <title>Nowish 1.1.0</title>
+      <pubDate>Tue, 22 Sep 2026 17:59:55 GMT</pubDate>
+      <sparkle:version>3</sparkle:version>
+      <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>Nowish 1.1.0. See GitHub Releases for details.</description>
+      <enclosure url="https://github.com/noelrohi/nowish/releases/download/v1.1.0/Nowish.dmg" type="application/octet-stream" sparkle:edSignature="Cr5jXf+Ppp3NvP9M+SehhDFRXpgLwDLD2qwTCzmxLkDwnIaskQBQy+qr0u1OmsZqk5K0a2G6UHIOwZPDTRiNCA==" length="3561816" />
+    </item>
+    <item>
       <title>Nowish 1.0.0</title>
       <pubDate>Tue, 22 Sep 2026 06:43:29 GMT</pubDate>
       <sparkle:version>2</sparkle:version>
