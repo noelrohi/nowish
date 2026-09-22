@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000002 /* Sparkle */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C86E647D3062331700CC9D11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C86E64653062331600CC9D11 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C86E646C3062331600CC9D11;
+			remoteInfo = nowish;
+		};
+		C86E64873062331700CC9D11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C86E64653062331600CC9D11 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C86E646C3062331600CC9D11;
+			remoteInfo = nowish;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C86E646D3062331600CC9D11 /* nowish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nowish.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C86E647C3062331700CC9D11 /* nowishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = nowishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C86E64863062331700CC9D11 /* nowishUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = nowishUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C86E646F3062331600CC9D11 /* nowish */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = nowish;
+			sourceTree = "<group>";
+		};
+		C86E647F3062331700CC9D11 /* nowishTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = nowishTests;
+			sourceTree = "<group>";
+		};
+		C86E64893062331700CC9D11 /* nowishUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = nowishUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C86E646A3062331600CC9D11 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				A10000000000000000000001 /* Sparkle in Frameworks */,
+			);
+		};
+		C86E64793062331700CC9D11 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		C86E64833062331700CC9D11 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C86E64643062331600CC9D11 = {
+			isa = PBXGroup;
+			children = (
+				C86E646F3062331600CC9D11 /* nowish */,
+				C86E647F3062331700CC9D11 /* nowishTests */,
+				C86E64893062331700CC9D11 /* nowishUITests */,
+				C86E646E3062331600CC9D11 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C86E646E3062331600CC9D11 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C86E646D3062331600CC9D11 /* nowish.app */,
+				C86E647C3062331700CC9D11 /* nowishTests.xctest */,
+				C86E64863062331700CC9D11 /* nowishUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C86E646C3062331600CC9D11 /* nowish */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C86E648E3062331700CC9D11 /* Build configuration list for PBXNativeTarget "nowish" */;
+			buildPhases = (
+				C86E64693062331600CC9D11 /* Sources */,
+				C86E646A3062331600CC9D11 /* Frameworks */,
+				C86E646B3062331600CC9D11 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				C86E646F3062331600CC9D11 /* nowish */,
+			);
+			name = nowish;
+			packageProductDependencies = (
+				A10000000000000000000002 /* Sparkle */,
+			);
+			productName = nowish;
+			productReference = C86E646D3062331600CC9D11 /* nowish.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C86E647B3062331700CC9D11 /* nowishTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C86E64913062331700CC9D11 /* Build configuration list for PBXNativeTarget "nowishTests" */;
+			buildPhases = (
+				C86E64783062331700CC9D11 /* Sources */,
+				C86E64793062331700CC9D11 /* Frameworks */,
+				C86E647A3062331700CC9D11 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C86E647E3062331700CC9D11 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C86E647F3062331700CC9D11 /* nowishTests */,
+			);
+			name = nowishTests;
+			productName = nowishTests;
+			productReference = C86E647C3062331700CC9D11 /* nowishTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C86E64853062331700CC9D11 /* nowishUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C86E64943062331700CC9D11 /* Build configuration list for PBXNativeTarget "nowishUITests" */;
+			buildPhases = (
+				C86E64823062331700CC9D11 /* Sources */,
+				C86E64833062331700CC9D11 /* Frameworks */,
+				C86E64843062331700CC9D11 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C86E64883062331700CC9D11 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C86E64893062331700CC9D11 /* nowishUITests */,
+			);
+			name = nowishUITests;
+			productName = nowishUITests;
+			productReference = C86E64863062331700CC9D11 /* nowishUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C86E64653062331600CC9D11 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					C86E646C3062331600CC9D11 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+					C86E647B3062331700CC9D11 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = C86E646C3062331600CC9D11;
+					};
+					C86E64853062331700CC9D11 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = C86E646C3062331600CC9D11;
+					};
+				};
+			};
+			buildConfigurationList = C86E64683062331600CC9D11 /* Build configuration list for PBXProject "nowish" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C86E64643062331600CC9D11;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A10000000000000000000003 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C86E646E3062331600CC9D11 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C86E646C3062331600CC9D11 /* nowish */,
+				C86E647B3062331700CC9D11 /* nowishTests */,
+				C86E64853062331700CC9D11 /* nowishUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C86E646B3062331600CC9D11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		C86E647A3062331700CC9D11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		C86E64843062331700CC9D11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C86E64693062331600CC9D11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		C86E64783062331700CC9D11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		C86E64823062331700CC9D11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C86E647E3062331700CC9D11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C86E646C3062331600CC9D11 /* nowish */;
+			targetProxy = C86E647D3062331700CC9D11 /* PBXContainerItemProxy */;
+		};
+		C86E64883062331700CC9D11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C86E646C3062331600CC9D11 /* nowish */;
+			targetProxy = C86E64873062331700CC9D11 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C86E648C3062331700CC9D11 /* Debug configuration for PBXProject "nowish" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2Z79866758;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C86E648D3062331700CC9D11 /* Release configuration for PBXProject "nowish" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2Z79866758;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		C86E648F3062331700CC9D11 /* Debug configuration for PBXNativeTarget "nowish" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = nowish/nowish.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 2Z79866758;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Configuration/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Nowish;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				NOWISH_UPDATE_FEED_URL = "https://raw.githubusercontent.com/noelrohi/nowish/main/appcast.xml";
+				NOWISH_UPDATE_PUBLIC_KEY = "ITBjkXjmtfAscYEBVG9Ro/qJ+zTlj1Zx5kaEibbZIp0=";
+				PRODUCT_BUNDLE_IDENTIFIER = com.enru.nowish;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C86E64903062331700CC9D11 /* Release configuration for PBXNativeTarget "nowish" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = nowish/nowish.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 2Z79866758;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Configuration/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Nowish;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				NOWISH_UPDATE_FEED_URL = "https://raw.githubusercontent.com/noelrohi/nowish/main/appcast.xml";
+				NOWISH_UPDATE_PUBLIC_KEY = "ITBjkXjmtfAscYEBVG9Ro/qJ+zTlj1Zx5kaEibbZIp0=";
+				PRODUCT_BUNDLE_IDENTIFIER = com.enru.nowish;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C86E64923062331700CC9D11 /* Debug configuration for PBXNativeTarget "nowishTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 2Z79866758;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.enru.nowishTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nowish.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/nowish";
+			};
+			name = Debug;
+		};
+		C86E64933062331700CC9D11 /* Release configuration for PBXNativeTarget "nowishTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 2Z79866758;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.enru.nowishTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nowish.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/nowish";
+			};
+			name = Release;
+		};
+		C86E64953062331700CC9D11 /* Debug configuration for PBXNativeTarget "nowishUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 2Z79866758;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.enru.nowishUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = nowish;
+			};
+			name = Debug;
+		};
+		C86E64963062331700CC9D11 /* Release configuration for PBXNativeTarget "nowishUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 2Z79866758;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.enru.nowishUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = nowish;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C86E64683062331600CC9D11 /* Build configuration list for PBXProject "nowish" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C86E648C3062331700CC9D11 /* Debug configuration for PBXProject "nowish" */,
+				C86E648D3062331700CC9D11 /* Release configuration for PBXProject "nowish" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		C86E648E3062331700CC9D11 /* Build configuration list for PBXNativeTarget "nowish" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C86E648F3062331700CC9D11 /* Debug configuration for PBXNativeTarget "nowish" */,
+				C86E64903062331700CC9D11 /* Release configuration for PBXNativeTarget "nowish" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		C86E64913062331700CC9D11 /* Build configuration list for PBXNativeTarget "nowishTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C86E64923062331700CC9D11 /* Debug configuration for PBXNativeTarget "nowishTests" */,
+				C86E64933062331700CC9D11 /* Release configuration for PBXNativeTarget "nowishTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		C86E64943062331700CC9D11 /* Build configuration list for PBXNativeTarget "nowishUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C86E64953062331700CC9D11 /* Debug configuration for PBXNativeTarget "nowishUITests" */,
+				C86E64963062331700CC9D11 /* Release configuration for PBXNativeTarget "nowishUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A10000000000000000000003 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A10000000000000000000002 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000003 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = C86E64653062331600CC9D11 /* Project object */;
+	validationLevel = 1;
+}

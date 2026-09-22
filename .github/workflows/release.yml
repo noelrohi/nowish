@@ -1,0 +1,111 @@
+name: Release Nowish
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version already set in Xcode (for example 1.0.0)'
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: nowish-release
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      RELEASE_DIR: ${{ github.workspace }}/dist
+      DERIVED_DATA: ${{ github.workspace }}/build/DerivedData
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: noelrohi/nowish
+      REQUESTED_VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Validate version and credentials
+        env:
+          CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          SPARKLE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          [[ "$REQUESTED_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          for name in CERTIFICATE CERTIFICATE_PASSWORD APPLE_ID APPLE_PASSWORD SPARKLE_KEY; do
+            [[ -n "${!name}" ]] || { echo "Missing release credential: $name"; exit 1; }
+          done
+          if gh release view "v$REQUESTED_VERSION" >/dev/null 2>&1; then
+            echo 'Release already exists. Use a new version or recover the existing release manually.'
+            exit 1
+          fi
+      - name: Create temporary signing Keychain
+        env:
+          APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          umask 077
+          KEYCHAIN_PATH="$RUNNER_TEMP/nowish-signing.keychain-db"
+          KEYCHAIN_PASSWORD=$(openssl rand -hex 32)
+          printf '%s' "$APPLE_CERTIFICATE_BASE64" | base64 --decode > "$RUNNER_TEMP/certificate.p12"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security import "$RUNNER_TEMP/certificate.p12" -P "$APPLE_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH" >/dev/null
+          security list-keychains -d user -s "$KEYCHAIN_PATH"
+          security default-keychain -d user -s "$KEYCHAIN_PATH"
+          xcrun notarytool store-credentials nowish-ci --apple-id "$APPLE_ID" --password "$APPLE_APP_SPECIFIC_PASSWORD" --team-id 2Z79866758
+          xcodebuild -resolvePackageDependencies -project nowish.xcodeproj -scheme nowish -derivedDataPath "$DERIVED_DATA"
+          printf '%s' "$SPARKLE_PRIVATE_KEY" > "$RUNNER_TEMP/sparkle.key"
+          "$DERIVED_DATA/SourcePackages/artifacts/sparkle/Sparkle/bin/generate_keys" --account com.enru.nowish.sparkle -f "$RUNNER_TEMP/sparkle.key"
+          EXPECTED='ITBjkXjmtfAscYEBVG9Ro/qJ+zTlj1Zx5kaEibbZIp0='
+          ACTUAL=$("$DERIVED_DATA/SourcePackages/artifacts/sparkle/Sparkle/bin/generate_keys" --account com.enru.nowish.sparkle -p)
+          [[ "$ACTUAL" == "$EXPECTED" ]] || { echo 'Sparkle signing key does not match the app'; exit 1; }
+          rm "$RUNNER_TEMP/certificate.p12" "$RUNNER_TEMP/sparkle.key"
+      - name: Test
+        run: |
+          xcodebuild test -project nowish.xcodeproj -scheme nowish -destination 'platform=macOS' \
+            -derivedDataPath "$DERIVED_DATA" -only-testing:nowishTests \
+            CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual ENABLE_HARDENED_RUNTIME=NO
+      - name: Archive and export universal app
+        run: |
+          scripts/build-release.sh
+          ACTUAL=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$RELEASE_DIR/export/nowish.app/Contents/Info.plist")
+          [[ "$ACTUAL" == "$REQUESTED_VERSION" ]] || { echo 'Requested version does not match the app'; exit 1; }
+      - name: Notarize, staple, package, and sign
+        env:
+          NOTARY_PROFILE: nowish-ci
+        run: scripts/notarize-release.sh
+      - name: Prepare release metadata
+        run: python3 scripts/prepare-appcast.py
+      - name: Publish notarized release
+        run: |
+          set -euo pipefail
+          gh release create "v$REQUESTED_VERSION" "$RELEASE_DIR/Nowish.dmg" "$RELEASE_DIR/SHA256SUMS" \
+            --draft --target "$GITHUB_SHA" --title "Nowish $REQUESTED_VERSION" --generate-notes
+          gh release edit "v$REQUESTED_VERSION" --draft=false
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add appcast.xml site/release.json
+          git commit -m "release: publish Nowish $REQUESTED_VERSION update feed"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Keep notarization reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: notarization-reports
+          path: dist/*-notarization.json
+          if-no-files-found: ignore
+      - name: Remove temporary credentials
+        if: always()
+        run: |
+          security delete-keychain "$RUNNER_TEMP/nowish-signing.keychain-db" || true
+          rm -f "$RUNNER_TEMP/certificate.p12" "$RUNNER_TEMP/sparkle.key"
