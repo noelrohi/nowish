@@ -18,6 +18,8 @@ struct AppActivity: Codable, Equatable {
     var displayName: String? = nil
     // nil inherits the default; an empty string explicitly disables glow.
     var color: String? = nil
+    // nil or empty inherits the default subtitle.
+    var subtitle: String? = nil
 
     func title(appName: String) -> String {
         // Reserve room for the app name within Roam's 140-code-point limit.
@@ -43,7 +45,7 @@ struct Preferences: Codable, Equatable {
     var ignored: [TrackedApp] = [Self.finder]
     // Optional so preferences saved before per-app activities still decode.
     var appActivities: [String: AppActivity]?
-
+    var subtitle: String?
 
     func emptyActivityReason(for app: TrackedApp?) -> String? {
         guard let app else { return "Switch to an app to preview its activity" }
@@ -56,7 +58,8 @@ struct Preferences: Codable, Equatable {
         guard let app, !ignored.contains(where: { $0.id == app.id }) else { return nil }
         if let activity = appActivities?[app.id] {
             let resolvedColor = activity.color ?? color
-            return ActivityDisplay(emoji: activity.emoji, title: activity.title(appName: app.name), color: resolvedColor.isEmpty ? nil : resolvedColor)
+            let override = activity.subtitle?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            return ActivityDisplay(emoji: activity.emoji, title: activity.title(appName: app.name), subtitle: Self.subtitle(override.isEmpty ? subtitle : override, app: app), color: resolvedColor.isEmpty ? nil : resolvedColor)
         }
         let title: String
         switch preset {
@@ -65,13 +68,19 @@ struct Preferences: Codable, Equatable {
         case .custom: title = template.replacingOccurrences(of: "{app}", with: app.name)
         }
         guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
-        return ActivityDisplay(emoji: emoji, title: String(String.UnicodeScalarView(title.unicodeScalars.prefix(140))), color: color.isEmpty ? nil : color)
+        return ActivityDisplay(emoji: emoji, title: String(String.UnicodeScalarView(title.unicodeScalars.prefix(140))), subtitle: Self.subtitle(subtitle, app: app), color: color.isEmpty ? nil : color)
+    }
+
+    static func subtitle(_ template: String?, app: TrackedApp) -> String? {
+        let text = (template ?? "").replacingOccurrences(of: "{app}", with: app.name).trimmingCharacters(in: .whitespacesAndNewlines)
+        return text.isEmpty ? nil : String(String.UnicodeScalarView(text.unicodeScalars.prefix(140)))
     }
 }
 
 struct ActivityDisplay: Codable, Equatable {
     let emoji: String
     let title: String
+    var subtitle: String? = nil
     let color: String?
 }
 

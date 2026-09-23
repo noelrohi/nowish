@@ -96,6 +96,9 @@ struct ActivityPreview: View {
                     .tracking(1.2).foregroundStyle(.secondary)
                 Text(display?.title ?? emptyReason ?? "No activity to share")
                     .font(.headline).lineLimit(3)
+                if let subtitle = display?.subtitle {
+                    Text(subtitle).font(.callout).foregroundStyle(.secondary).lineLimit(2)
+                }
             }
             Spacer(minLength: 0)
         }

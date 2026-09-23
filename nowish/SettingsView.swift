@@ -95,6 +95,10 @@ struct SettingsView: View {
                     Text("Use {app} for the app’s name. Titles are limited to 140 characters.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
+                TextField("Subtitle", text: Binding(
+                    get: { model.preferences.subtitle ?? "" },
+                    set: { model.preferences.subtitle = $0 }
+                ), prompt: Text("Optional"))
                 EmojiField(emoji: $model.preferences.emoji)
                 Picker("Glow", selection: $model.preferences.color) {
                     Text("None").tag("")
@@ -122,6 +126,7 @@ private struct AppActivityEditor: View {
     @State private var shareApp: Bool
     @State private var color: String?
     @State private var displayName: String
+    @State private var subtitle: String
 
     init(model: PresenceModel, app: TrackedApp) {
         self.model = model
@@ -130,6 +135,7 @@ private struct AppActivityEditor: View {
         let activity = model.preferences.appActivities?[app.id]
         _emoji = State(initialValue: activity?.emoji ?? model.preferences.emoji)
         _displayName = State(initialValue: activity?.displayName ?? "")
+        _subtitle = State(initialValue: activity?.subtitle ?? "")
         _color = State(initialValue: activity?.color)
         let defaultPrefix: String
         switch model.preferences.preset {
@@ -140,7 +146,7 @@ private struct AppActivityEditor: View {
         _prefix = State(initialValue: activity?.prefix ?? defaultPrefix)
     }
 
-    private var activity: AppActivity { AppActivity(app: app, emoji: emoji, prefix: prefix, displayName: displayName, color: color) }
+    private var activity: AppActivity { AppActivity(app: app, emoji: emoji, prefix: prefix, displayName: displayName, color: color, subtitle: subtitle) }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -158,9 +164,10 @@ private struct AppActivityEditor: View {
                     }
                     TextField("Display name", text: $displayName, prompt: Text(app.name))
                     TextField("Prefix", text: $prefix, prompt: Text("Working with"))
-                    Text("Leave the display name empty to use the original app name. Leave the prefix empty to show just the name.")
+                    TextField("Subtitle", text: $subtitle, prompt: Text(model.preferences.subtitle.flatMap { $0.isEmpty ? nil : $0 } ?? "Optional"))
+                    Text("Leave the display name empty to use the original app name. Leave the prefix empty to show just the name. Leave the subtitle empty to use the default.")
                         .font(.caption).foregroundStyle(.secondary)
-                    ActivityPreview(display: ActivityDisplay(emoji: emoji, title: activity.title(appName: app.name), color: nil), emptyReason: nil)
+                    ActivityPreview(display: ActivityDisplay(emoji: emoji, title: activity.title(appName: app.name), subtitle: Preferences.subtitle(subtitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? model.preferences.subtitle : subtitle, app: app), color: nil), emptyReason: nil)
                     if !shareApp {
                         Text("Sharing is off for this app. Its activity settings will still be saved.")
                             .font(.caption).foregroundStyle(.orange)
