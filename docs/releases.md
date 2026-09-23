@@ -17,6 +17,8 @@ The wizard never prints private keys or passwords. `.env.release` stores only lo
 
 Increment `MARKETING_VERSION` (three components, e.g. `1.0.0`) and `CURRENT_PROJECT_VERSION` in Xcode before archiving. Build numbers must increase.
 
+Write `release-notes/VERSION.md` for every release. Sparkle shows these notes in the update window, and GitHub uses them as the release body. Use short paragraphs and `- ` bullets; backticks become code. Releases without notes are refused.
+
 ```sh
 scripts/build-release.sh
 NOTARY_PROFILE=your-profile scripts/notarize-release.sh
