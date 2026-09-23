@@ -391,7 +391,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Configuration/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Nowish;
+				INFOPLIST_KEY_CFBundleDisplayName = "Nowish Dev";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -401,7 +401,7 @@
 				MARKETING_VERSION = 1.1.0;
 				NOWISH_UPDATE_FEED_URL = "https://raw.githubusercontent.com/noelrohi/nowish/main/appcast.xml";
 				NOWISH_UPDATE_PUBLIC_KEY = "ITBjkXjmtfAscYEBVG9Ro/qJ+zTlj1Zx5kaEibbZIp0=";
-				PRODUCT_BUNDLE_IDENTIFIER = com.enru.nowish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.enru.nowish.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
