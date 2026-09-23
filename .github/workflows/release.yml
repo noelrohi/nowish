@@ -37,6 +37,7 @@ jobs:
           for name in CERTIFICATE CERTIFICATE_PASSWORD APPLE_ID APPLE_PASSWORD SPARKLE_KEY; do
             [[ -n "${!name}" ]] || { echo "Missing release credential: $name"; exit 1; }
           done
+          [[ -s "release-notes/$REQUESTED_VERSION.md" ]] || { echo "Write release-notes/$REQUESTED_VERSION.md before releasing"; exit 1; }
           if gh release view "v$REQUESTED_VERSION" >/dev/null 2>&1; then
             echo 'Release already exists. Use a new version or recover the existing release manually.'
             exit 1
@@ -90,7 +91,7 @@ jobs:
         run: |
           set -euo pipefail
           gh release create "v$REQUESTED_VERSION" "$RELEASE_DIR/Nowish.dmg" "$RELEASE_DIR/SHA256SUMS" \
-            --draft --target "$GITHUB_SHA" --title "Nowish $REQUESTED_VERSION" --generate-notes
+            --draft --target "$GITHUB_SHA" --title "Nowish $REQUESTED_VERSION" --notes-file "release-notes/$REQUESTED_VERSION.md"
           gh release edit "v$REQUESTED_VERSION" --draft=false
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
