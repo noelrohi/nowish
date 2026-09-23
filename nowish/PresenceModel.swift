@@ -121,16 +121,23 @@ final class PresenceModel {
         await worker?.value
     }
 
+    // Release and Debug builds skip each other so neither shares Nowish as an activity.
+    static let nowishBundleIDs: Set<String> = ["com.enru.nowish", "com.enru.nowish.debug"]
+
+    static func isNowish(_ bundleID: String?) -> Bool {
+        bundleID.map { nowishBundleIDs.contains($0) || $0 == Bundle.main.bundleIdentifier } ?? false
+    }
+
     private func refreshApps() {
         runningApps = NSWorkspace.shared.runningApplications.compactMap { app -> TrackedApp? in
             guard app.activationPolicy == .regular, let id = app.bundleIdentifier,
-                  id != Bundle.main.bundleIdentifier else { return nil }
+                  !Self.isNowish(id) else { return nil }
             return TrackedApp(id: id, name: app.localizedName ?? id)
         }.reduce(into: [TrackedApp]()) { result, app in
             if !result.contains(where: { $0.id == app.id }) { result.append(app) }
         }.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
         if let app = NSWorkspace.shared.frontmostApplication {
-            if app.bundleIdentifier != Bundle.main.bundleIdentifier {
+            if !Self.isNowish(app.bundleIdentifier) {
                 frontmost = app.bundleIdentifier.map { TrackedApp(id: $0, name: app.localizedName ?? $0) }
             }
         } else {

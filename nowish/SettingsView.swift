@@ -87,7 +87,7 @@ struct SettingsView: View {
                     .font(.caption).foregroundStyle(.secondary)
             }
             Section("Activity text") {
-                Picker("Preset", selection: $model.preferences.preset) {
+                Picker("Title", selection: $model.preferences.preset) {
                     ForEach(TextPreset.allCases, id: \.self) { Text($0.rawValue).tag($0) }
                 }
                 if model.preferences.preset == .custom {

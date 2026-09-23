@@ -38,7 +38,7 @@ struct Preferences: Codable, Equatable {
     static let finder = TrackedApp(id: "com.apple.finder", name: "Finder")
     var sharing = false
     var userID = ""
-    var preset = TextPreset.working
+    var preset = TextPreset.appName
     var template = "Working with {app}"
     var emoji = "💻"
     var color = ""
