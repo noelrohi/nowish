@@ -5,6 +5,15 @@
     <description>Nowish releases</description>
     <language>en</language>
     <item>
+      <title>Nowish 1.1.1</title>
+      <pubDate>Wed, 23 Sep 2026 02:38:52 GMT</pubDate>
+      <sparkle:version>4</sparkle:version>
+      <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>&lt;ul&gt;&lt;li&gt;Add an optional subtitle to your activity, with a per-app override. Use &lt;code&gt;{app}&lt;/code&gt; for the app's name.&lt;/li&gt;&lt;li&gt;New installs share just the app name as the title. The Preset picker is now called Title.&lt;/li&gt;&lt;li&gt;Nowish no longer shares itself as your activity, including side-by-side development builds.&lt;/li&gt;&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/noelrohi/nowish/releases/download/v1.1.1/Nowish.dmg" type="application/octet-stream" sparkle:edSignature="zToKhSps3wPLhXdkXbS66eY49zAx2ryj4dSzo2s/EJlPMCO+bJ7Nxtd4ZC+meG4/CViVdDbajwe87nZ53fAeBA==" length="3568105" />
+    </item>
+    <item>
       <title>Nowish 1.1.0</title>
       <pubDate>Tue, 22 Sep 2026 17:59:55 GMT</pubDate>
       <sparkle:version>3</sparkle:version>
