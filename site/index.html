@@ -1,44 +1,96 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f6f5f1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08080d"><meta name="color-scheme" content="dark">
 <title>Nowish — Your status, in the moment.</title>
 <meta name="description" content="A little macOS menu bar app that keeps your Roam activity in step with the app you’re using. Personalize what you share. Keep private apps private.">
-<meta property="og:title" content="Nowish — Your status, in the moment."><meta property="og:description" content="Your Mac knows what you’re working in. Now your Roam teammates can, too."><meta property="og:type" content="website"><meta property="og:image" content="/assets/nowish.png">
+<meta property="og:title" content="Nowish — Your status, in the moment."><meta property="og:description" content="Your Mac knows what you’re working in. Now your Roam teammates can, too."><meta property="og:type" content="website"><meta property="og:url" content="https://nowish.pages.dev/"><meta property="og:image" content="https://nowish.pages.dev/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Nowish on a Mac desktop: the menu bar menu shows “Building in Xcode” above a Dock of apps."><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.png" type="image/png"><link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="shell">
-<header><a class="brand" href="#" aria-label="Nowish home"><img src="assets/favicon.png" alt="" width="28" height="28">Nowish</a><a class="github" href="https://github.com/noelrohi/nowish">GitHub <span aria-hidden="true">↗</span></a></header>
+
+<header class="menubar">
+  <div class="menubar-left">
+    <strong id="menu-app">Xcode</strong>
+    <span class="menus" aria-hidden="true"><span>File</span><span>Edit</span><span>View</span><span>Window</span></span>
+  </div>
+  <div class="menubar-right">
+    <button class="mark" id="mark" type="button" aria-label="Nowish menu" aria-expanded="false" aria-controls="popover"><img src="assets/mark.svg" alt="" width="16" height="16"></button>
+    <span class="menu-icon" aria-hidden="true"><svg width="17" height="13" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4.4 7.6a6.5 6.5 0 0 1 9.2 0M1.8 4.9a10.2 10.2 0 0 1 14.4 0M7 10.2a2.8 2.8 0 0 1 4 0"/><circle cx="9" cy="12.4" r=".6" fill="currentColor"/></svg></span>
+    <time class="clock" id="clock">9:41</time>
+  </div>
+</header>
+
+<div class="popover" id="popover" role="dialog" aria-label="Nowish">
+  <div class="pop-head">
+    <img src="assets/mark.svg" alt="" width="18" height="18">
+    <div><strong>Nowish</strong><span class="pop-status"><i id="pop-dot"></i><span id="pop-status">Sharing with Roam</span></span></div>
+    <button class="switch" id="sharing" type="button" role="switch" aria-checked="true" aria-label="Share activity"><i></i></button>
+  </div>
+  <div class="preview" id="preview">
+    <span class="preview-emoji" id="preview-emoji">🛠️</span>
+    <div><small>Activity preview</small><strong id="preview-title">Building in Xcode</strong></div>
+  </div>
+  <hr>
+  <button class="pop-row" id="ignore" type="button">Ignore Xcode</button>
+  <a class="pop-row" href="#apps">Settings…<kbd>⌘,</kbd></a>
+  <button class="pop-row" id="quit" type="button">Quit Nowish<kbd>⌘Q</kbd></button>
+</div>
+
 <main id="main">
-<section class="hero" aria-labelledby="headline">
-<img class="app-icon" src="assets/nowish.png" alt="Nowish: a silver circle and spark on a graphite tile" width="88" height="88">
-<h1 id="headline">Your status,<br><span>in the moment.</span></h1>
-<p class="intro">A little menu bar app that keeps your Roam activity in step with the app you’re using.</p>
-<a class="cta release-link" href="https://github.com/noelrohi/nowish/releases">Follow the first release <span aria-hidden="true">↗</span></a>
-<p class="availability" id="availability">First release coming soon · macOS 14+</p>
-</section>
-<section class="demo" aria-labelledby="demo-label">
-<p class="demo-label" id="demo-label">Switch apps. Your status follows.</p>
-<div class="mac">
-<div class="screen" aria-hidden="true"><div class="desktop">
-<div class="menubar"><strong id="menu-app">Xcode</strong><span class="menu-item">File</span><span class="menu-item">Edit</span><span class="menu-item">View</span><span class="menu-item">Window</span><span class="menu-spacer"></span><span class="menu-mark" id="menu-mark"><img src="assets/mark.svg" alt="" width="15" height="15"></span><span>9:41</span></div>
-<div class="popover" id="popover"><div class="popover-head"><span>Roam status</span><span class="live" id="live-label">Sharing</span></div><div class="popover-main"><span class="emoji" id="emoji">🛠️</span><div><strong id="status-title">Building in Xcode</strong><span id="status-detail">Visible to your teammates</span></div></div></div>
-<div class="window" id="window" data-app="xcode"><div class="titlebar"><i></i><i></i><i></i><span id="window-title">Xcode</span></div><div class="window-body"><div class="sidebar"><i></i><i></i><i></i><i></i></div><div class="content"><i></i><i></i><i></i><i></i></div></div></div>
-<div class="dock"><span data-icon="xcode" class="active">⌘</span><span data-icon="figma">◈</span><span data-icon="music">♫</span><span data-icon="journal">☾</span></div>
-<svg class="cursor" id="cursor" viewBox="0 0 16 22"><path d="M1.5 1.5v16.2l4.1-4 2.9 6.6 2.7-1.2-2.8-6.4h5.8z"/></svg>
-</div></div>
-<div class="base"></div>
-</div>
-<div class="controls"><div class="app-choices" role="group" aria-label="Try switching apps"><button data-app="xcode" aria-pressed="true">Xcode</button><button data-app="figma" aria-pressed="false">Figma</button><button data-app="music" aria-pressed="false">Music</button><button data-app="journal" aria-pressed="false">Journal <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.3" aria-label="ignored"><path d="m2 2 12 12M6 3.5A7 7 0 0 1 14 8a9 9 0 0 1-2 2.7M9.7 12.3A8 8 0 0 1 2 8a9 9 0 0 1 2.3-3"/></svg></button></div><button class="play" id="play" aria-label="Pause demo"><svg class="icon-pause" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="4" y="3" width="3" height="10" rx="1"/><rect x="9" y="3" width="3" height="10" rx="1"/></svg><svg class="icon-play" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M5 3.2v9.6a.6.6 0 0 0 .9.5l7.6-4.8a.6.6 0 0 0 0-1L5.9 2.7a.6.6 0 0 0-.9.5z"/></svg></button></div>
-<p class="visually-hidden" id="announce" aria-live="polite"></p>
-<p class="demo-note">A preview, not your live activity.</p>
-</section>
-<section class="details" aria-label="Features"><article><h2>Follows your focus</h2><p>Switch apps and your status follows after a short pause. Nowish stays quietly in your menu bar.</p></article><article><h2>Sounds like you</h2><p>Pick an emoji, name, and prefix for each app, so “Figma” feels a little more you.</p></article><article><h2>Private by default</h2><p>Ignore any app or pause sharing. Nowish reads app names, never documents or window titles.</p></article></section>
-<section class="setup" aria-labelledby="setup-title"><h2 id="setup-title">Set up in a minute.</h2><p>Add your Roam email and access token, choose which apps to share, and turn it on. Your token stays in the macOS Keychain.</p><a class="cta release-link" href="https://github.com/noelrohi/nowish/releases">Follow the first release <span aria-hidden="true">↗</span></a></section>
+  <section class="desktop" aria-labelledby="headline">
+    <div class="wallpaper" aria-hidden="true"><i></i><i></i></div>
+    <div class="hero">
+      <img class="hero-icon" src="assets/nowish.png" alt="Nowish app icon" width="84" height="84">
+      <h1 id="headline">Your status,<br><span>in the moment.</span></h1>
+      <p>Nowish shares the app you’re in as your Roam status.</p>
+      <a class="download release-link" href="https://github.com/noelrohi/nowish/releases">Download for macOS</a>
+      <p class="meta" id="availability">macOS 14+ · Apple silicon &amp; Intel</p>
+    </div>
+    <p class="hint" id="hint">Click an app</p>
+    <nav class="dock" aria-label="Try switching apps">
+      <button data-app="finder" aria-pressed="false"><img src="assets/apps/finder.png" alt="" width="52" height="52"><span>Finder</span></button>
+      <button data-app="safari" aria-pressed="false"><img src="assets/apps/safari.png" alt="" width="52" height="52"><span>Safari</span></button>
+      <button data-app="xcode" aria-pressed="true"><img src="assets/apps/xcode.png" alt="" width="52" height="52"><span>Xcode</span></button>
+      <button data-app="figma" aria-pressed="false"><img src="assets/apps/figma.png" alt="" width="52" height="52"><span>Figma</span></button>
+      <button data-app="slack" aria-pressed="false"><img src="assets/apps/slack.png" alt="" width="52" height="52"><span>Slack</span></button>
+      <button data-app="music" aria-pressed="false"><img src="assets/apps/music.png" alt="" width="52" height="52"><span>Music</span></button>
+      <button data-app="journal" aria-pressed="false"><img src="assets/apps/journal.png" alt="" width="52" height="52"><span>Journal</span></button>
+    </nav>
+    <p class="visually-hidden" id="announce" aria-live="polite"></p>
+  </section>
+
+  <section class="section apps" id="apps" aria-labelledby="apps-title">
+    <div class="copy">
+      <h2 id="apps-title">Sounds like you.</h2>
+      <p>An emoji and a few words for every app. Switch one off and it stays private.</p>
+    </div>
+    <div class="window">
+      <div class="titlebar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span>Applications</span></div>
+      <ul class="app-list" id="app-list"></ul>
+    </div>
+  </section>
+
+  <section class="section privacy" aria-labelledby="privacy-title">
+    <h2 id="privacy-title">The app name.<br><span>Nothing else.</span></h2>
+    <ul class="facts">
+      <li>No window titles</li>
+      <li>No documents</li>
+      <li>Clears on pause, sleep and quit</li>
+      <li>Token in your Keychain</li>
+    </ul>
+  </section>
+
+  <section class="section closing" aria-labelledby="closing-title">
+    <img src="assets/nowish.png" alt="" width="64" height="64">
+    <h2 id="closing-title">Set up in a minute.</h2>
+    <a class="download release-link" href="https://github.com/noelrohi/nowish/releases">Download for macOS</a>
+    <a class="source" href="https://github.com/noelrohi/nowish">Source on GitHub ↗</a>
+  </section>
 </main>
+
 <footer><span>Nowish · Made for macOS</span><span>Independent app, not affiliated with Roam.</span></footer>
-</div>
-</body></html>
+</body>
+</html>
