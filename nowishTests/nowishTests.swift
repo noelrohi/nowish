@@ -17,9 +17,10 @@ struct NowishTests {
 
     @Test func presetsAndIgnoredApps() {
         var preferences = Preferences()
-        #expect(preferences.display(for: xcode)?.title == "Working with Xcode")
-        preferences.preset = .appName
         #expect(preferences.display(for: xcode)?.title == "Xcode")
+        #expect(preferences.display(for: xcode)?.subtitle == nil)
+        preferences.preset = .working
+        #expect(preferences.display(for: xcode)?.title == "Working with Xcode")
         preferences.preset = .custom
         preferences.template = "Building in {app}"
         #expect(preferences.display(for: xcode)?.title == "Building in Xcode")
@@ -35,7 +36,7 @@ struct NowishTests {
         #expect(preferences.emptyActivityReason(for: xcode) == "Xcode is ignored")
         preferences.ignored.removeAll()
         #expect(preferences.emptyActivityReason(for: xcode) == nil)
-        #expect(preferences.display(for: xcode)?.title == "Working with Xcode")
+        #expect(preferences.display(for: xcode)?.title == "Xcode")
         #expect(preferences.emptyActivityReason(for: nil) == "Switch to an app to preview its activity")
         preferences.preset = .custom
         preferences.template = " "
@@ -48,7 +49,7 @@ struct NowishTests {
         #expect(preferences.display(for: xcode)?.title == "Building in Xcode")
         #expect(preferences.display(for: xcode)?.emoji == "🛠️")
         let safari = TrackedApp(id: "com.apple.Safari", name: "Safari")
-        #expect(preferences.display(for: safari)?.title == "Working with Safari")
+        #expect(preferences.display(for: safari)?.title == "Safari")
         #expect(preferences.display(for: safari)?.emoji == "💻")
         let restored = try JSONDecoder().decode(Preferences.self, from: JSONEncoder().encode(preferences))
         #expect(restored == preferences)
@@ -62,7 +63,7 @@ struct NowishTests {
         #expect(preferences.display(for: xcode) == nil)
         preferences.ignored = []
         preferences.appActivities?.removeValue(forKey: xcode.id)
-        #expect(preferences.display(for: xcode)?.title == "Working with Xcode")
+        #expect(preferences.display(for: xcode)?.title == "Xcode")
     }
 
     @Test func displayNameOverridePersistsAndFallsBackWhenBlank() throws {
@@ -81,6 +82,21 @@ struct NowishTests {
         let activity = try JSONDecoder().decode(AppActivity.self, from: legacy)
         #expect(activity.displayName == nil)
         #expect(activity.title(appName: "Xcode") == "Using Xcode")
+    }
+
+    @Test func subtitleUsesDefaultUnlessAppOverrides() throws {
+        var preferences = Preferences()
+        preferences.subtitle = "  in {app}  "
+        #expect(preferences.display(for: xcode)?.subtitle == "in Xcode")
+        preferences.appActivities = [xcode.id: AppActivity(app: xcode, emoji: "💻", prefix: "", subtitle: "Shipping 1.2")]
+        #expect(preferences.display(for: xcode)?.subtitle == "Shipping 1.2")
+        preferences.appActivities?[xcode.id]?.subtitle = " "
+        #expect(preferences.display(for: xcode)?.subtitle == "in Xcode")
+        preferences.subtitle = String(repeating: "🚀", count: 150)
+        #expect(preferences.display(for: xcode)?.subtitle?.unicodeScalars.count == 140)
+        let data = try JSONEncoder().encode(ActivityRequest(userId: "person@example.com", externalId: "nowish:test", display: preferences.display(for: xcode)))
+        let json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        #expect((json["display"] as? [String: Any])?["subtitle"] is String)
     }
 
     @Test func perAppGlowInheritsOverridesAndDisables() throws {
@@ -128,7 +144,8 @@ struct NowishTests {
         #expect(json["ttlSeconds"] as? Int == 120)
         #expect(json["externalId"] as? String == "nowish:test")
         let appearance = try #require(json["display"] as? [String: Any])
-        #expect(appearance["title"] as? String == "Working with Xcode")
+        #expect(appearance["title"] as? String == "Xcode")
+        #expect(appearance["subtitle"] == nil)
         #expect(appearance["color"] == nil)
         #expect(json["dnd"] == nil)
         let clear = ActivityRequest(userId: "person@example.com", externalId: "nowish:test", display: nil)
@@ -169,7 +186,7 @@ struct NowishTests {
         migrated.setIgnored(Preferences.finder, ignored: false)
         let restored = PresenceModel(defaults: defaults)
         #expect(restored.preferences.ignored == [xcode])
-        #expect(restored.preferences.display(for: Preferences.finder)?.title == "Working with Finder")
+        #expect(restored.preferences.display(for: Preferences.finder)?.title == "Finder")
         await migrated.stop()
         await reopened.stop()
         await restored.stop()
@@ -184,10 +201,10 @@ struct NowishTests {
         model.setIgnored(xcode, ignored: true)
         model.setIgnored(xcode, ignored: true)
         #expect(model.preferences.ignored.count == 2)
-        model.preferences.preset = .appName
+        model.preferences.preset = .working
         let restored = PresenceModel(defaults: defaults)
         #expect(restored.preferences.ignored == [Preferences.finder, xcode])
-        #expect(restored.preferences.preset == .appName)
+        #expect(restored.preferences.preset == .working)
         #expect(!restored.hasToken)
         await model.stop()
         await restored.stop()
