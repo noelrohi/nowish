@@ -5,6 +5,15 @@
     <description>Nowish releases</description>
     <language>en</language>
     <item>
+      <title>Nowish 1.1.2</title>
+      <pubDate>Wed, 23 Sep 2026 02:48:51 GMT</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.1.2</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description>&lt;ul&gt;&lt;li&gt;Nowish builds no longer appear in Applications, even if you ignored one in an earlier version.&lt;/li&gt;&lt;/ul&gt;</description>
+      <enclosure url="https://github.com/noelrohi/nowish/releases/download/v1.1.2/Nowish.dmg" type="application/octet-stream" sparkle:edSignature="XTd1Dy58srUGsy4UA6RQ10w7O0VqswqgOgZF9Ugr4wosoYD+WsjdbCb139cGMxdDVGxPcvT9XHgBjRMsQunIBA==" length="3569043" />
+    </item>
+    <item>
       <title>Nowish 1.1.1</title>
       <pubDate>Wed, 23 Sep 2026 02:38:52 GMT</pubDate>
       <sparkle:version>4</sparkle:version>
