@@ -15,7 +15,8 @@ struct ApplicationsPane: View {
     private var apps: [TrackedApp] {
         let saved = (model.preferences.appActivities ?? [:]).values.map(\.app)
         var byID: [String: TrackedApp] = [:]
-        for app in saved + model.preferences.ignored + model.runningApps { byID[app.id] = app }
+        // Entries saved before Nowish filtered itself can still name a Nowish build.
+        for app in saved + model.preferences.ignored + model.runningApps where !PresenceModel.isNowish(app.id) { byID[app.id] = app }
         return byID.values.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
     }
 
@@ -81,7 +82,7 @@ struct ApplicationsPane: View {
         panel.directoryURL = URL(fileURLWithPath: "/Applications")
         panel.prompt = "Choose"
         guard panel.runModal() == .OK, let url = panel.url,
-              let bundle = Bundle(url: url), let id = bundle.bundleIdentifier else { return }
+              let bundle = Bundle(url: url), let id = bundle.bundleIdentifier, !PresenceModel.isNowish(id) else { return }
         edit(TrackedApp(id: id, name: (bundle.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String) ?? url.deletingPathExtension().lastPathComponent))
     }
 }
