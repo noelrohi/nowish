@@ -31,11 +31,11 @@
   </div>
   <div class="preview" id="preview">
     <span class="preview-emoji" id="preview-emoji">🛠️</span>
-    <div><small>Activity preview</small><strong id="preview-title">Building in Xcode</strong></div>
+    <div><small>Activity preview</small><strong id="preview-title">Building in Xcode</strong><span class="preview-subtitle" id="preview-subtitle">Shipping Nowish</span></div>
   </div>
   <hr>
   <button class="pop-row" id="ignore" type="button">Ignore Xcode</button>
-  <a class="pop-row" href="#apps">Settings…<kbd>⌘,</kbd></a>
+  <a class="pop-row" href="#how">Settings…<kbd>⌘,</kbd></a>
   <button class="pop-row" id="quit" type="button">Quit Nowish<kbd>⌘Q</kbd></button>
 </div>
 
@@ -62,14 +62,70 @@
     <p class="visually-hidden" id="announce" aria-live="polite"></p>
   </section>
 
+  <section class="section how" id="how" aria-labelledby="how-title">
+    <h2 id="how-title">Set up in <span>a minute.</span></h2>
+    <ol class="steps">
+      <li class="step">
+        <div class="step-ui" aria-hidden="true">
+          <div class="field"><small>Email or user ID</small><span>you@yourteam.com</span></div>
+          <div class="field"><small>Personal access token</small><span>••••••••••••••••</span></div>
+          <span class="chip">🔒 Stored in Keychain</span>
+        </div>
+        <h3><b>1</b>Connect Roam</h3>
+        <p>In <strong>Settings → Roam</strong>, enter your Roam email and a personal access token. The token stays in your Mac’s Keychain.</p>
+      </li>
+      <li class="step">
+        <div class="step-ui">
+          <div class="segmented" role="radiogroup" aria-label="Title">
+            <button type="button" role="radio" aria-checked="true" data-preset="app">App name</button>
+            <button type="button" role="radio" aria-checked="false" data-preset="working">Working with…</button>
+            <button type="button" role="radio" aria-checked="false" data-preset="custom">Custom</button>
+          </div>
+          <div class="mini-preview" aria-live="polite"><span>💻</span><div><strong id="preset-title">Xcode</strong><small id="preset-hint">Just the app’s name</small></div></div>
+        </div>
+        <h3><b>2</b>Pick a default</h3>
+        <p>In <strong>Settings → Activity</strong>, choose a title, an optional subtitle, an emoji and a glow. Every app starts from here.</p>
+      </li>
+      <li class="step">
+        <div class="step-ui">
+          <div class="toggle-row"><span>Share my frontmost app</span><button class="switch" id="demo-share" type="button" role="switch" aria-checked="true" aria-label="Share my frontmost app"><i></i></button></div>
+          <div class="mini-preview" id="demo-status"><span id="demo-status-emoji">🛠️</span><div><strong id="demo-status-title">Building in Xcode</strong><small id="demo-share-note">Following your focus</small></div></div>
+        </div>
+        <h3><b>3</b>Turn it on</h3>
+        <p>Nowish shares the app you’re using after a two-second pause. Pause, sleep or quit, and your status clears.</p>
+      </li>
+    </ol>
+  </section>
+
   <section class="section apps" id="apps" aria-labelledby="apps-title">
-    <div class="copy">
-      <h2 id="apps-title">Sounds like you.</h2>
-      <p>An emoji and a few words for every app. Switch one off and it stays private.</p>
+    <div class="apps-head">
+      <h2 id="apps-title">Make every app<br><span>sound like you.</span></h2>
+      <p>Click any app in <strong>Settings → Applications</strong> to give it its own status. Try it here. The menu bar updates as you type.</p>
     </div>
-    <div class="window">
+    <div class="window editor-window">
       <div class="titlebar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span>Applications</span></div>
-      <ul class="app-list" id="app-list"></ul>
+      <div class="editor-body">
+        <ul class="app-list" id="app-list" aria-label="Applications"></ul>
+        <form class="editor" id="editor" autocomplete="off">
+          <div class="big-preview" id="big-preview">
+            <span class="part-emoji" id="ed-preview-emoji"></span>
+            <div>
+              <strong class="part-title"><span class="part-prefix" id="ed-preview-prefix"></span> <span class="part-name" id="ed-preview-name"></span></strong>
+              <span class="part-subtitle" id="ed-preview-subtitle"></span>
+            </div>
+          </div>
+          <p class="editor-note">Point at a field to see which part of your status it changes.</p>
+          <div class="toggle-row"><span id="ed-share-label">Share when this app is frontmost</span><button class="switch" id="ed-share" type="button" role="switch" aria-labelledby="ed-share-label"><i></i></button></div>
+          <div class="form-grid">
+            <fieldset class="wide" data-part="emoji"><legend>Emoji</legend><div class="emoji-picks" id="emoji-picks"></div></fieldset>
+            <label data-part="prefix"><span>Prefix</span><input id="ed-prefix" maxlength="60" placeholder="Working with"></label>
+            <label data-part="name"><span>Display name</span><input id="ed-name" maxlength="60"></label>
+            <label class="wide" data-part="subtitle"><span>Subtitle</span><input id="ed-subtitle" maxlength="140" placeholder="Optional — {app} becomes the app’s name"></label>
+            <fieldset class="wide" data-part="glow"><legend>Glow</legend><div class="swatches" id="swatches"></div></fieldset>
+          </div>
+          <p class="editor-note">Title = prefix + display name. Leave the display name empty to use the app’s own name, or the prefix empty to show just the name.</p>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -85,7 +141,7 @@
 
   <section class="section closing" aria-labelledby="closing-title">
     <img src="assets/nowish.png" alt="" width="64" height="64">
-    <h2 id="closing-title">Set up in a minute.</h2>
+    <h2 id="closing-title">Ready when you are.</h2>
     <a class="download release-link" href="https://github.com/noelrohi/nowish/releases">Download for macOS</a>
     <a class="source" href="https://github.com/noelrohi/nowish">Source on GitHub ↗</a>
   </section>
