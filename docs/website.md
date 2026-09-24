@@ -2,7 +2,7 @@
 
 Public URL: https://nowish.pages.dev
 
-The static site is in `site/`. No build step, dependencies, analytics, or external fonts are required. The desktop demo (menu bar, Nowish menu, and Dock) is illustrative and never accesses real application activity. The Dock icons in `site/assets/apps/` are exported from the installed apps with `NSWorkspace.icon(forFile:)` at 256 px.
+The static site is in `site/`. No build step, dependencies, analytics, or external fonts are required. The desktop demo (menu bar, Nowish menu, and Dock), the setup steps, and the Applications editor are illustrative and never access real application activity. The editor mirrors the app’s per-app settings (emoji, prefix, display name, subtitle with `{app}`, glow, and sharing), and its edits feed the menu bar demo. Keep it in step with `AppActivity` and `AppActivityEditor` when those change. The Dock icons in `site/assets/apps/` are exported from the installed apps with `NSWorkspace.icon(forFile:)` at 256 px.
 
 Preview locally:
 
@@ -18,6 +18,6 @@ npx wrangler@4 pages deploy site --project-name nowish --branch main --commit-di
 
 Nowish 1.0.0 is published and the CTA downloads its notarized DMG. For future releases, set `version` and `url` in `site/release.json` to the release version and its `https://github.com/noelrohi/nowish/releases/download/...` asset URL, then redeploy. The CTA will become Download for macOS. Do not advertise a download before the artifact exists.
 
-Checked the 1440px desktop and 390px mobile layouts, the Dock switching (two-second settle, ignored apps clearing at once), and the release link.
+Checked the 1280px desktop and 390px mobile layouts, the Dock switching (clicks publish instantly; the idle tour keeps the two-second settle), the per-app editor updating the menu bar, and the release link.
 
 The Open Graph image `site/assets/og.png` (1200×630) is a headless Chrome capture of the hero at 1600×838 and 1.5× scale, with the “Click an app” hint hidden and the clock set to 9:41 AM, resized with `sips`. Recapture it when the hero changes.
